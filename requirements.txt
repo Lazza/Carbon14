@@ -1,0 +1,7 @@
+colorama
+cssselect
+lxml
+pytz
+requests
+six
+tzlocal
