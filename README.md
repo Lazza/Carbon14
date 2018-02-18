@@ -52,13 +52,16 @@ Here's a snippet of the output:
     --------------------------------------------------------------------------------
     Date (UTC)           Date (Europe/Rome)   URL
     -------------------- -------------------- --------------------------------------
-    2017-02-06 19:53:16  2017-02-06 20:53:16  <https://eforensicsmag.com/wp-content/uploads/2016/09/Untitled-1.png>
 
-    2017-02-06 19:53:25  2017-02-06 20:53:25  <https://eforensicsmag.com/wp-content/uploads/2016/02/logo-1.png>
+    [...]
 
-    2017-02-06 19:53:36  2017-02-06 20:53:36  <https://eforensicsmag.com/wp-content/uploads/2015/09/Untitled-1.png>
+    2017-03-06 14:27:17  2017-03-06 15:27:17  <https://eforensicsmag.com/wp-content/uploads/2017/03/image06-1.png>
 
-We can infer that work on that article began on February 6, 2017.
+    2017-03-06 14:43:04  2017-03-06 15:43:04  <https://eforensicsmag.com/wp-content/uploads/2017/03/image04-1.png>
+
+    2017-03-06 14:48:22  2017-03-06 15:48:22  <https://eforensicsmag.com/wp-content/uploads/2017/03/image02-1.png>
+
+We can infer that work on that article began on March 6, 2017.
 
 ## Markdown report
 
