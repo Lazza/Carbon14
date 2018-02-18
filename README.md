@@ -9,7 +9,7 @@ From [Wikipedia][1]:
 > using the properties of radiocarbon (<sup>14</sup>C), a radioactive isotope of
 > carbon.
 
-## Rationale
+## Rationale
 
 While performing digital forensics or OSINT, it might be crucial to determine
 when a certain blog post has been written. Common CMS's easily permit to change
@@ -23,7 +23,8 @@ be leveraged to estimate the time period spent by the writer while preparing a
 blog post. This period can be compared to what the CMS shows in order to detect
 notable differences.
 
-## Usage
+
+## Usage
 
 Carbon14 accepts the target URL and an optional author name.
 
