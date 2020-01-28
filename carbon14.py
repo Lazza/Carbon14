@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Carbon14
-# Copyright 2017-2018 Andrea Lazzarotto
+# Copyright 2017-2020 Andrea Lazzarotto
 #
 # Carbon14 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
