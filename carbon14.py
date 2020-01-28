@@ -21,8 +21,6 @@
 from __future__ import print_function
 
 import argparse
-import codecs
-import locale
 import logging
 import pytz
 import requests
@@ -36,12 +34,6 @@ from email.utils import parsedate
 from lxml import etree
 from six.moves.urllib.parse import urljoin
 from six.moves.urllib.parse import urlparse
-
-"""Wrapping sys.stdout into an instance of StreamWriter will allow writing
-unicode data with sys.stdout.write() and print.
-https://wiki.python.org/moin/PrintFails"""
-sys.stdout = codecs.getwriter(locale.getpreferredencoding())(sys.stdout)
-sys.stderr = codecs.getwriter(locale.getpreferredencoding())(sys.stderr)
 
 local_timezone = tzlocal.get_localzone()
 
@@ -135,7 +127,7 @@ class Analysis(object):
 
     def report_section(self, title, selector):
         print('\n{}# {}\n'.format(Fore.RED, title))
-        filtered = filter(selector, self.images)
+        filtered = list(filter(selector, self.images))
         if not len(filtered):
             print('Nothing found.')
             return

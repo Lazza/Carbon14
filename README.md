@@ -23,10 +23,10 @@ be leveraged to estimate the time period spent by the writer while preparing a
 blog post. This period can be compared to what the CMS shows in order to detect
 notable differences.
 
-
 ## Usage
 
-Carbon14 accepts the target URL and an optional author name.
+Carbon14 accepts the target URL and an optional author name. **It works on
+Python 3** and Python 2 as well.
 
     usage: carbon14.py [-h] [-a name] url
 
