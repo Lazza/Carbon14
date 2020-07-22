@@ -37,6 +37,11 @@ from six.moves.urllib.parse import urlparse
 
 local_timezone = tzlocal.get_localzone()
 
+proxies = {
+    'http': 'socks5h://127.0.0.1:9050',
+    'https': 'socks5h://127.0.0.1:9050'
+}
+
 
 def log(message):
     print('{}{}'.format(Style.DIM, message), file=sys.stderr)
@@ -180,6 +185,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Date images on a web page.')
     parser.add_argument('url', help='URL of the page')
     parser.add_argument('-a', '--author', metavar='name', help='author to be included in the report')
+    parser.add_argument('-t', '--tor', help='use Carbon14 to analyze an hidden service',action="store_true")
     args = parser.parse_args()
 
     # Prepare colorama
