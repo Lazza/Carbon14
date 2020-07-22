@@ -39,6 +39,8 @@ Python 3** and Python 2 as well.
       -h, --help            show this help message and exit
       -a name, --author name
                             author to be included in the report
+      -t --tor
+                            use tor proxy             
 
 The tool prints a simple report in [Pandoc's extended Markdown][2] format which
 can then be redirected to a file (or with `tee`). For example:
