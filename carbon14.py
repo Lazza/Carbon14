@@ -71,8 +71,9 @@ class Result(object):
 
 
 class Analysis(object):
-    def __init__(self, url, author):
+    def __init__(self, url, author, tor):
         self.url = url
+        self.tor = tor
         self.author = author
         self.images = []
         self.end = None
@@ -80,6 +81,8 @@ class Analysis(object):
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:57.0) Gecko/20100101 Firefox/57.0'
         })
+        if(tor):
+            self.session.proxies.update(proxies)
 
     def handle_image(self, address, requested):
         if address is None or address in requested:
@@ -191,7 +194,7 @@ if __name__ == '__main__':
     # Prepare colorama
     init(autoreset=True)
 
-    analysis = Analysis(args.url, args.author)
+    analysis = Analysis(args.url, args.author, args.tor)
     analysis.run()
     if analysis.end:
         analysis.report()
