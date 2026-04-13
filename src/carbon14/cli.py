@@ -21,7 +21,6 @@
 from __future__ import print_function
 
 import argparse
-import logging
 import pytz
 import requests
 import sys
@@ -176,7 +175,7 @@ class Analysis(object):
         self.report_section('All images', lambda x: True)
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='Date images on a web page.')
     parser.add_argument('url', help='URL of the page')
     parser.add_argument('-a', '--author', metavar='name', help='author to be included in the report')
@@ -189,3 +188,6 @@ if __name__ == '__main__':
     analysis.run()
     if analysis.end:
         analysis.report()
+
+if __name__ == '__main__':
+    main()
