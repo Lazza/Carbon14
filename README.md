@@ -23,12 +23,21 @@ be leveraged to estimate the time period spent by the writer while preparing a
 blog post. This period can be compared to what the CMS shows in order to detect
 notable differences.
 
+## Installation
+
+You can install Carbon14 using Pip:
+
+    pip install carbon14
+
+Or as a tool with `uv`:
+
+    uv tool install carbon14
+
 ## Usage
 
-Carbon14 accepts the target URL and an optional author name. **It works on
-Python 3** and Python 2 as well.
+Carbon14 accepts the target URL and an optional author name.
 
-    usage: carbon14.py [-h] [-a name] url
+    usage: carbon14 [-h] [-a name] url
 
     Date images on a web page.
 
