@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Carbon14
-# Copyright 2017-2020 Andrea Lazzarotto
+# Copyright 2017-present Andrea Lazzarotto
 #
 # Carbon14 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,22 +17,19 @@
 # You should have received a copy of the GNU General Public License
 # along with Carbon14. If not, see <http://www.gnu.org/licenses/>.
 
-
-from __future__ import print_function
-
 import argparse
-import pytz
-import requests
+from datetime import datetime
+from email.utils import parsedate
 import sys
-import tzlocal
+from urllib.parse import urljoin, urlparse
+
 from colorama import Fore
 from colorama import init
 from colorama import Style
-from datetime import datetime
-from email.utils import parsedate
 from lxml import etree
-from six.moves.urllib.parse import urljoin
-from six.moves.urllib.parse import urlparse
+import pytz
+import requests
+import tzlocal
 
 local_timezone = tzlocal.get_localzone()
 
@@ -57,14 +54,14 @@ def readable_date(value):
     return value.strftime('%Y-%m-%d %H:%M:%S')
 
 
-class Result(object):
+class Result:
     def __init__(self, timestamp, absolute, internal):
         self.timestamp = timestamp
         self.absolute = absolute
         self.internal = internal
 
 
-class Analysis(object):
+class Analysis:
     def __init__(self, url, author):
         self.url = url
         self.author = author
@@ -162,11 +159,11 @@ class Analysis(object):
             ('Analysis ended', '{} ({})'.format(readable_date(ended), ended.tzinfo))
         ]
         for label, value in metadata:
-            print(u'- {}**{}:**{} {}'.format(Style.BRIGHT + Fore.CYAN, label, Style.RESET_ALL, value))
+            print('- {}**{}:**{} {}'.format(Style.BRIGHT + Fore.CYAN, label, Style.RESET_ALL, value))
 
         # Format HTTP headers as code
         headers = '\n'.join('    {}: {}'.format(label, self.request.headers[label]) for label in self.request.headers)
-        print(u'\n{}# HTTP headers\n'.format(Fore.RED))
+        print('\n{}# HTTP headers\n'.format(Fore.RED))
         print(headers)
 
         # Sections
