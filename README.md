@@ -72,6 +72,34 @@ Here's a snippet of the output:
 
 We can infer that work on that article began on March 6, 2017.
 
+## Using proxies
+
+Carbon14 uses the Python `requests` library, which supports standard proxy
+environment variables. This means you can route traffic through a proxy
+without adding command-line options.
+
+Temporary proxy usage for a single command:
+
+    HTTP_PROXY=http://127.0.0.1:8080 HTTPS_PROXY=http://127.0.0.1:8080 carbon14 https://example.org
+
+Persist proxy settings in your shell session:
+
+    export HTTP_PROXY=http://127.0.0.1:8080
+    export HTTPS_PROXY=http://127.0.0.1:8080
+    carbon14 https://example.org
+
+If you use Tor, point those variables to your local HTTP proxy bridge. A common
+setup is Tor + Privoxy, where Privoxy listens on `127.0.0.1:8118` and forwards
+traffic to Tor:
+
+    export HTTP_PROXY=http://127.0.0.1:8118
+    export HTTPS_PROXY=http://127.0.0.1:8118
+    carbon14 https://example.onion
+
+You may also unset variables to go back to direct connections:
+
+    unset HTTP_PROXY HTTPS_PROXY
+
 ## Markdown report
 
 The Markdown syntax is text-based and lightweight. This means that the report
