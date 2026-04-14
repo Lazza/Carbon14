@@ -23,12 +23,21 @@ be leveraged to estimate the time period spent by the writer while preparing a
 blog post. This period can be compared to what the CMS shows in order to detect
 notable differences.
 
+## Installation
+
+You can install Carbon14 using Pip:
+
+    pip install carbon14
+
+Or as a tool with `uv`:
+
+    uv tool install carbon14
+
 ## Usage
 
-Carbon14 accepts the target URL and an optional author name. **It works on
-Python 3** and Python 2 as well.
+Carbon14 accepts the target URL and an optional author name.
 
-    usage: carbon14.py [-h] [-a name] url
+    usage: carbon14 [-h] [-a name] url
 
     Date images on a web page.
 
@@ -62,6 +71,34 @@ Here's a snippet of the output:
     2017-03-06 14:48:22  2017-03-06 15:48:22  <https://eforensicsmag.com/wp-content/uploads/2017/03/image02-1.png>
 
 We can infer that work on that article began on March 6, 2017.
+
+## Using proxies
+
+Carbon14 uses the Python `requests` library, which supports standard proxy
+environment variables. This means you can route traffic through a proxy
+without adding command-line options.
+
+Temporary proxy usage for a single command:
+
+    HTTP_PROXY=http://127.0.0.1:8080 HTTPS_PROXY=http://127.0.0.1:8080 carbon14 https://example.org
+
+Persist proxy settings in your shell session:
+
+    export HTTP_PROXY=http://127.0.0.1:8080
+    export HTTPS_PROXY=http://127.0.0.1:8080
+    carbon14 https://example.org
+
+If you use Tor, point those variables to your local HTTP proxy bridge. A common
+setup is Tor + Privoxy, where Privoxy listens on `127.0.0.1:8118` and forwards
+traffic to Tor:
+
+    export HTTP_PROXY=http://127.0.0.1:8118
+    export HTTPS_PROXY=http://127.0.0.1:8118
+    carbon14 https://example.onion
+
+You may also unset variables to go back to direct connections:
+
+    unset HTTP_PROXY HTTPS_PROXY
 
 ## Markdown report
 

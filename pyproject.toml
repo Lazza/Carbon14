@@ -1,0 +1,47 @@
+[project]
+name = "Carbon14"
+version = "1.0.0"
+description = "OSINT tool for estimating when a web page was written."
+readme = "README.md"
+authors = [
+    { name = "Andrea Lazzarotto", email = "andrea.lazzarotto@gmail.com" }
+]
+license = "GPL-3.0-only"
+requires-python = ">=3.9"
+dependencies = [
+    "colorama>=0.4.6",
+    "cssselect>=1.1.0",
+    "lxml>=5.0.2",
+    "pytz>=2026.1.post1",
+    "requests>=2.25.1",
+    "tzlocal>=2.1",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Security",
+]
+
+[project.urls]
+Homepage = "https://github.com/Lazza/Carbon14"
+Repository = "https://github.com/Lazza/Carbon14"
+Issues = "https://github.com/Lazza/Carbon14/issues"
+
+[project.scripts]
+carbon14 = "carbon14.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.9.24,<0.10.0"]
+build-backend = "uv_build"
