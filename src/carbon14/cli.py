@@ -35,15 +35,15 @@ local_timezone = tzlocal.get_localzone()
 
 
 def log(message):
-    print('{}{}'.format(Style.DIM, message), file=sys.stderr)
+    print("{}{}".format(Style.DIM, message), file=sys.stderr)
 
 
 def warning(message):
-    print('{}{}'.format(Fore.YELLOW, message), file=sys.stderr)
+    print("{}{}".format(Fore.YELLOW, message), file=sys.stderr)
 
 
 def error(message):
-    print('{}{}'.format(Style.BRIGHT + Fore.RED, message), file=sys.stderr)
+    print("{}{}".format(Style.BRIGHT + Fore.RED, message), file=sys.stderr)
 
 
 def localize(utc):
@@ -51,7 +51,7 @@ def localize(utc):
 
 
 def readable_date(value):
-    return value.strftime('%Y-%m-%d %H:%M:%S')
+    return value.strftime("%Y-%m-%d %H:%M:%S")
 
 
 class Result:
@@ -68,114 +68,129 @@ class Analysis:
         self.images = []
         self.end = None
         self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:57.0) Gecko/20100101 Firefox/57.0'
-        })
+        self.session.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:57.0) Gecko/20100101 Firefox/57.0"
+            }
+        )
 
     def handle_image(self, address, requested):
         if address is None or address in requested:
             return
         requested.add(address)
-        log('Working on image {}'.format(address))
+        log("Working on image {}".format(address))
         absolute = urljoin(self.url, address)
         try:
             headers = self.session.get(absolute, stream=True).headers
-            parsed = parsedate(headers['Last-Modified'])
+            parsed = parsedate(headers["Last-Modified"])
             timestamp = datetime(*parsed[:6], tzinfo=pytz.utc)
         except:
-            warning('Cannot fetch date for this image')
+            warning("Cannot fetch date for this image")
             return
         internal = urlparse(self.url).netloc == urlparse(absolute).netloc
         self.images.append(Result(timestamp, absolute, internal))
 
     def run(self):
         self.start = datetime.now(tz=pytz.utc)
-        log('Fetching page {}'.format(self.url))
+        log("Fetching page {}".format(self.url))
         try:
             self.request = self.session.get(self.url)
         except:
-            error('Error fetching page!')
+            error("Error fetching page!")
             return
 
         html = etree.HTML(self.request.text)
 
         # Extract page title
-        titles = html.cssselect('title')
+        titles = html.cssselect("title")
         self.title = titles[0].text if len(titles) else None
 
         # Loop through all images
-        images = html.cssselect('img')
+        images = html.cssselect("img")
         requested = set()
         for image in images:
-            if 'src' not in image.attrib:
+            if "src" not in image.attrib:
                 continue
-            address = image.attrib['src']
-            if address.startswith('data:'):
+            address = image.attrib["src"]
+            if address.startswith("data:"):
                 continue
             self.handle_image(address, requested)
         opengraph = html.cssselect('meta[property="og:image"]')
         for image in opengraph:
-            address = image.attrib['content']
+            address = image.attrib["content"]
             self.handle_image(address, requested)
 
         self.end = datetime.now(tz=pytz.utc)
         self.images.sort(key=lambda i: i.timestamp)
 
     def report_section(self, title, selector):
-        print('\n{}# {}\n'.format(Fore.RED, title))
+        print("\n{}# {}\n".format(Fore.RED, title))
         filtered = list(filter(selector, self.images))
         if not len(filtered):
-            print('Nothing found.')
+            print("Nothing found.")
             return
 
-        print('{}{}'.format(Style.DIM, '-'*80))
-        labels = ('Date (UTC)', 'Date ({})'.format(local_timezone), 'URL')
-        print('{}{:20} {:20} {}'.format(Style.BRIGHT, *labels))
-        print('{}{} {} {}'.format(Style.DIM, '-'*20, '-'*20, '-'*38))
+        print("{}{}".format(Style.DIM, "-" * 80))
+        labels = ("Date (UTC)", "Date ({})".format(local_timezone), "URL")
+        print("{}{:20} {:20} {}".format(Style.BRIGHT, *labels))
+        print("{}{} {} {}".format(Style.DIM, "-" * 20, "-" * 20, "-" * 38))
         for result in filtered:
-            print('{:20} {:20} <{}>\n'.format(
-                readable_date(result.timestamp),
-                readable_date(localize(result.timestamp)),
-                result.absolute
-            ))
-        print('{}{}'.format(Style.DIM, '-'*80))
-
+            print(
+                "{:20} {:20} <{}>\n".format(
+                    readable_date(result.timestamp),
+                    readable_date(localize(result.timestamp)),
+                    result.absolute,
+                )
+            )
+        print("{}{}".format(Style.DIM, "-" * 80))
 
     def report(self):
         # Preamble
-        print('---')
-        print(r'title: {}Carbon14 web page analysis'.format(Fore.MAGENTA))
+        print("---")
+        print(r"title: {}Carbon14 web page analysis".format(Fore.MAGENTA))
         if self.author:
-            print(r'author: {}{}'.format(Fore.MAGENTA, self.author))
-        print(r'date: {}{}'.format(Fore.MAGENTA, self.start.strftime('%Y-%m-%d')))
-        print('---')
-        print('\n{}# General information\n'.format(Fore.RED))
+            print(r"author: {}{}".format(Fore.MAGENTA, self.author))
+        print(r"date: {}{}".format(Fore.MAGENTA, self.start.strftime("%Y-%m-%d")))
+        print("---")
+        print("\n{}# General information\n".format(Fore.RED))
         started = localize(self.start)
         ended = localize(self.end)
         metadata = [
-            ('Page URL', '<{}>'.format(self.url)),
-            ('Page title', self.title),
-            ('Analysis started', '{} ({})'.format(readable_date(started), started.tzinfo)),
-            ('Analysis ended', '{} ({})'.format(readable_date(ended), ended.tzinfo))
+            ("Page URL", "<{}>".format(self.url)),
+            ("Page title", self.title),
+            (
+                "Analysis started",
+                "{} ({})".format(readable_date(started), started.tzinfo),
+            ),
+            ("Analysis ended", "{} ({})".format(readable_date(ended), ended.tzinfo)),
         ]
         for label, value in metadata:
-            print('- {}**{}:**{} {}'.format(Style.BRIGHT + Fore.CYAN, label, Style.RESET_ALL, value))
+            print(
+                "- {}**{}:**{} {}".format(
+                    Style.BRIGHT + Fore.CYAN, label, Style.RESET_ALL, value
+                )
+            )
 
         # Format HTTP headers as code
-        headers = '\n'.join('    {}: {}'.format(label, self.request.headers[label]) for label in self.request.headers)
-        print('\n{}# HTTP headers\n'.format(Fore.RED))
+        headers = "\n".join(
+            "    {}: {}".format(label, self.request.headers[label])
+            for label in self.request.headers
+        )
+        print("\n{}# HTTP headers\n".format(Fore.RED))
         print(headers)
 
         # Sections
-        self.report_section('Internal images', lambda x: x.internal)
-        self.report_section('External images', lambda x: not x.internal)
-        self.report_section('All images', lambda x: True)
+        self.report_section("Internal images", lambda x: x.internal)
+        self.report_section("External images", lambda x: not x.internal)
+        self.report_section("All images", lambda x: True)
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Date images on a web page.')
-    parser.add_argument('url', help='URL of the page')
-    parser.add_argument('-a', '--author', metavar='name', help='author to be included in the report')
+    parser = argparse.ArgumentParser(description="Date images on a web page.")
+    parser.add_argument("url", help="URL of the page")
+    parser.add_argument(
+        "-a", "--author", metavar="name", help="author to be included in the report"
+    )
     args = parser.parse_args()
 
     # Prepare colorama
@@ -186,5 +201,6 @@ def main():
     if analysis.end:
         analysis.report()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
